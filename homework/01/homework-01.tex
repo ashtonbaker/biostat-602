@@ -5,24 +5,57 @@
 \usepackage{../stats-homework}
 
 \begin{document}
-\title{MATH 571 Numerical Linear Algebra\\Exam 02}
+\title{BIOSTAT 602 Biostatistical Inference\\Homework 01}
 \author{Ashton Baker}
-\date{Thursday December 22, 2016}
+\date{Thursday January 12, 2017}
 \maketitle
 \begin{enumerate}
 \item A coin is twice as likely to turn up tails as heads. If the coin is tossed independently, what is the probability that the third head occurs on the 5th trial?
 
-\textbf{Solution.} This implies that $\P(H) = 1/3$ and $\P(T) = 2/3$. So
+\textbf{Solution.} This implies that $\P(H) = 1/3$ and $\P(T) = 2/3$. The probability of 2 heads occuring in the first 4 trials is described by a binomial distribution:
+\[\binom{4}{2}(1/3)^2(2/3)^2 = 8/27\]
+Then, the probability of heads occuring on the 5th trial is $1/3$, so the probability is
+\[(8/27)(1/3) = 8/81 \approx 0.0988\]
 
-\item Suppose $X$ and $Y$ are two independent variables with unit variance. Let $Z = aX + Y$, where $a > 0$. If $\cor(X, Z) = 1/3$ ,then obtain the value of $a$.
+\item Suppose $X$ and $Y$ are two independent variables with unit variance. Let $Z = aX + Y$, where $a > 0$. If $\cor{X, Z} = 1/3$, then obtain the value of $a$.
+
+\textbf{Solution.} By the definition of correlation,
+\[\cor{X, Z} = \frac{\cov{X, Z}}{\sigma_X \sigma_Z} = 1/3\]
+We can begin by finding $\cov{X, Z}$. Note that because $X$ and $Y$ are independent, $\cov{X, Y} = 0$.
+\[\begin{aligned}
+\cov{X, Z} &= \ev{XZ} - \ev{X}\ev{Z} \\
+           &= \ev{aX^2 + XY} - \ev{X}\ev{aX + Y} \\
+           &= a\ev{X^2} + \ev{XY} - a\ev{X}\ev{X} + \ev{X}\ev{Y} \\
+           &= a \var{X} + \cov{X, Y} \\
+           &= a
+\end{aligned}\]
+Because $X$ and $Y$ have unit variance,
+\[\begin{aligned}
+\sigma_Z &= \sqrt{\var{Z}} \\
+         &= \sqrt{\var{aX + Y}} \\
+         &= \sqrt{a^2 \var{X} + \var{Y} + 2a\cov{X, Y}} \\
+         &= \sqrt{a^2 + 1}
+\end{aligned}\]
+and $\sigma_X = 1$. So $a = \sqrt{a^2 + 1} / 3$.
 
 \item Let $g(x)$, $x \geq 0$ be a valid pdf for a nonnegative random variable and define
-\[ f(x, y) = \frac{ g(\sqrt{x^2 + y*2}) }{ 2\pi \sqrt{x^2 + y^2} }\]
+\[ f(x, y) = \frac{ g(\sqrt{x^2 + y^2}) }{ 2\pi \sqrt{x^2 + y^2} }\]
 for $-\infty < x, y < \infty$.
   \begin{enumerate}
   \item Show that $f(x, y)$ is a valid pdf.
 
+  \textbf{Solution.} The function $f$ depends on $x$ and $y$ only in terms of  $r = \sqrt{x^2 + y^2}$. So $f(x, y) = f(r)$, and
+  \[\begin{aligned}
+  \int_{-\infty}^\infty \int_{-\infty}^\infty f(x, y) \; dx \; dy &= \int_0^\infty 2\pi r f(r)\; dr \\
+  &= \int_0^\infty 2 \pi r \frac{g(r)}{2 \pi r} \; dr\\
+  &= \int_0^\infty g(r) \; dr \\
+  &= 1
+  \end{aligned}\]
+  So $f$ is a valid pdf.
+
   \item Suppose that the pair $(X, Y)$ has the pdf $f(x, y)$. What is $P(XY > 0)$?
+
+  \textbf{Solution.} Due to the radial symmetry of $f$, $P(XY > 0) = 1/2$.
   \end{enumerate}
 
 \item Given independent and identically distributed random samples $X_1, X_2, \ldots, X_n$, each with finite mean $\mu$ and finite variance $\sigma^2$, define
@@ -38,7 +71,7 @@ W^2 &= \frac{1}{n} \sum_{i = 1}^n \left(X_i - \Xbar\right)^2
   \end{enumerate}
 
 \item For two sets of random varibales $\{X_i\}$, $i = 1, \ldots, n$, and $\{Y_i\}$, $j = 1, \ldots, m$, show that
-\[\cov\left( \sum_{i=1}^n a_i X_i, \sum_{j=1}^m b_j Y_j = \sum_{i=1}^n \sum_{j=1}^m a_i b_j \cov(X_i, Y-j)\right)\]
+\[\cov{\sum_{i=1}^n a_i X_i, \sum_{j=1}^m b_j Y_j} = \sum_{i=1}^n \sum_{j=1}^m a_i b_j \cov{X_i, Y-j}\]
 where $a_i$ and $b_j$ are arbitrary constants.
 
 \item Suppose $N \dist \poisson(\lambda)$. Given $N = n > 0$, $X_1, \ldots, X_N$ are iid and follow $\U[0, 1]$. We define $X_0 = 0$ when $N = 0$.
@@ -47,7 +80,7 @@ where $a_i$ and $b_j$ are arbitrary constants.
 
   \item Find the (unconditional) probability that $X_0, X_1, \ldots, X_N$ are all less than $t$, where $0 < t < 1$.
 
-  \item Let $S_N = X_0 + X_1 + \cdots + X_N$. Compute $\ev(S_N)$.
+  \item Let $S_N = X_0 + X_1 + \cdots + X_N$. Compute $\ev{S_N}$.
   \end{enumerate}
 
 \item Let $X_1, X_2, X_3$ be a random sample of size 3 from a $N(0, 1)$ population. In each of the following cases, $Z$ denotes a specific function derived from this random sample. In each case identify the distribution of the resulting random variable $Z$ along with the associated parameters.
