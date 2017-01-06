@@ -1,0 +1,66 @@
+\documentclass[titlepage]{article}
+
+%\linespread{1.25}
+
+\usepackage{../stats-homework}
+
+\begin{document}
+\title{MATH 571 Numerical Linear Algebra\\Exam 02}
+\author{Ashton Baker}
+\date{Thursday December 22, 2016}
+\maketitle
+\begin{enumerate}
+\item A coin is twice as likely to turn up tails as heads. If the coin is tossed independently, what is the probability that the third head occurs on the 5th trial?
+
+\textbf{Solution.} This implies that $\P(H) = 1/3$ and $\P(T) = 2/3$. So
+
+\item Suppose $X$ and $Y$ are two independent variables with unit variance. Let $Z = aX + Y$, where $a > 0$. If $\cor(X, Z) = 1/3$ ,then obtain the value of $a$.
+
+\item Let $g(x)$, $x \geq 0$ be a valid pdf for a nonnegative random variable and define
+\[ f(x, y) = \frac{ g(\sqrt{x^2 + y*2}) }{ 2\pi \sqrt{x^2 + y^2} }\]
+for $-\infty < x, y < \infty$.
+  \begin{enumerate}
+  \item Show that $f(x, y)$ is a valid pdf.
+
+  \item Suppose that the pair $(X, Y)$ has the pdf $f(x, y)$. What is $P(XY > 0)$?
+  \end{enumerate}
+
+\item Given independent and identically distributed random samples $X_1, X_2, \ldots, X_n$, each with finite mean $\mu$ and finite variance $\sigma^2$, define
+\[\begin{aligned}
+\Xbar &= \frac{1}{n} \sum_{i = 1}^n X_i
+S^2 &= \frac{1}{n-1} \sum_{i = 1}^n \left(X_i - \Xbar\right)^2
+W^2 &= \frac{1}{n} \sum_{i = 1}^n \left(X_i - \Xbar\right)^2
+\end{aligned}\]
+  \begin{enumerate}
+  \item Show that $S^2 \xrightarrow{P} \sigma^2$
+  \item Derive the asymptotic distribution of $\frac{\sqrt{n}\left(\Xbar - \mu\right)}{\sqrt{S^2}}$
+  \item Use the Delta method to derive the asymptotic distribution of $\Xbar^2$ after you normalize it appropriately.
+  \end{enumerate}
+
+\item For two sets of random varibales $\{X_i\}$, $i = 1, \ldots, n$, and $\{Y_i\}$, $j = 1, \ldots, m$, show that
+\[\cov\left( \sum_{i=1}^n a_i X_i, \sum_{j=1}^m b_j Y_j = \sum_{i=1}^n \sum_{j=1}^m a_i b_j \cov(X_i, Y-j)\right)\]
+where $a_i$ and $b_j$ are arbitrary constants.
+
+\item Suppose $N \dist \poisson(\lambda)$. Given $N = n > 0$, $X_1, \ldots, X_N$ are iid and follow $\U[0, 1]$. We define $X_0 = 0$ when $N = 0$.
+  \begin{enumerate}
+  \item Given $N = n$, find the probability that $X_0, X_1, \ldots, X_N$ are all less that $t$, where $0 < t < 1$.
+
+  \item Find the (unconditional) probability that $X_0, X_1, \ldots, X_N$ are all less than $t$, where $0 < t < 1$.
+
+  \item Let $S_N = X_0 + X_1 + \cdots + X_N$. Compute $\ev(S_N)$.
+  \end{enumerate}
+
+\item Let $X_1, X_2, X_3$ be a random sample of size 3 from a $N(0, 1)$ population. In each of the following cases, $Z$ denotes a specific function derived from this random sample. In each case identify the distribution of the resulting random variable $Z$ along with the associated parameters.
+  \begin{enumerate}
+  \item $X_1 + X_2 + 2X_3$.
+
+  \item $X_1^2 + X_2^2 + X_3^3$.
+
+  \item $(X_1 - X_2)^2 / 2$.
+
+  \item $Z = \frac{2X_1^2}{X_2^2 + X_3^2}$
+
+  \item $Z = \frac{(X_1 - X_2)^2}{(X_1 + X_2)^2}$
+  \end{enumerate}
+\end{enumerate}
+\end{document}
