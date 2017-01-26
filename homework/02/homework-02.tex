@@ -1,0 +1,152 @@
+\documentclass[titlepage]{article}
+
+%\linespread{1.25}
+
+\usepackage{../stats-homework}
+%\usepackage{baskervald}
+%\usepackage[T1]{fontenc}
+
+
+\begin{document}
+\title{BIOSTAT 602 Biostatistical Inference\\Homework 02}
+\author{Ashton Baker}
+\date{Thursday January 19, 2017}
+\maketitle
+\begin{enumerate}
+\item Let $X_1, \ldots, X_n$ be \emph{i.i.d.} random variables from the probability density function of the following form:
+\[f_X(x|\mu,\sigma) = \frac{1}{\sigma}e^{-(x-\mu)/\sigma}, \quad \mu < x < \infty, \quad 0 < \sigma < \infty.\]
+  \begin{enumerate}
+  \item Assuming that $\mu$ is known, find a one-dimensional sufficient statistic for $\sigma$.
+
+  \textbf{Solution.} The pdf can be rewritten
+  \[f(x | \mu, \sigma) = \frac{1}{\sigma}e^{-(x - \mu)/\sigma}1_{\{x > \mu\}}\]
+  so the joint pdf of $\vec{X}$ is
+  \[\begin{aligned}
+  f_\vec{X}(\vec{x}|\mu, \sigma) &= \prod_{i=1}^n \frac{1}{\sigma}e^{-(x_i - \mu)}1_{\{x_i > \mu\}} \\
+  &= \frac{e^{n\mu/\sigma}}{\sigma^n} e^{-\frac{1}{\sigma}\sum_{i=1}^n x_i}1_{\{x_{(1)} > \mu\}}
+  \end{aligned}\]
+  So if $T(\vec{X}) = \sum_{i=1}^n X_i$, then we can construct
+  \[\begin{aligned}
+  g\left(T(\vec{x}), \sigma\right) &= \frac{e^{n\mu/\sigma}}{\sigma^n} e^{-\frac{1}{\sigma}\sum_{i=1}^n x_i} \\
+  h(\vec{x}) &= 1_{\{x_{(1)} > \mu\}}
+  \end{aligned}\]
+  such that $f_\vec{X}(\vec{x}|\mu, \sigma) = g\left(T(\vec{x}), \sigma\right) h(\vec{x})$, proving that $T(\vec{x})$ is sufficient for $\sigma$.
+
+  \item Assuming that $\sigma$ is known, find a one-dimensional sufficient statistic for $\mu$.
+
+  \textbf{Solution.} For $T(\vec{X}) = X_{(1)}$, we can construct
+  \[\begin{aligned}
+  g(T(\vec{x}), \mu) &= 1_{\{x_{(1)} > \mu\}} \\
+  h(\vec{x}) &= \frac{e^{n\mu/\sigma}}{\sigma^n} e^{-\frac{1}{\sigma}\sum_{i=1}^n x_i}
+  \end{aligned}\]
+  such that $f_\vec{X}(\vec{x}|\mu, \sigma) = g\left(T(\vec{x}), \mu\right) h(\vec{x})$, proving that $T(\vec{x})$ is sufficient for $\mu$.
+
+  \item Assuming that both parameters are unknown, find a two-dimensional sufficient statistic for $(\mu, \sigma)$.
+
+  \textbf{Solution.} Simply combine the answers for (a) and (b) to obtain the two-dimensional statistic $T(\vec{X}) = (\sum_{i=1}^n X_i, X_{(1)})$. Then construct
+  \[\begin{aligned}
+  g(T(\vec{x}), (\sigma, \mu)) &= \frac{e^{n\mu/\sigma}}{\sigma^n} e^{-\frac{1}{\sigma}\sum_{i=1}^n x_i}1_{\{x_{(1)} > \mu\}} \\
+  h(\vec{x}) &= 1
+  \end{aligned}\]
+  such that $f_\vec{X}(\vec{x}|\mu, \sigma) = g\left(T(\vec{x}), (\sigma, \mu)\right) h(\vec{x})$, proving that $T(\vec{x})$ is sufficient for $(\sigma, \mu)$.
+  \end{enumerate}
+
+\item Let $X_1, \ldots, X_n$ be \emph{i.i.d} random variables from $\N{0, \sigma^2}$
+\[ f_X(x | \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{x^2}{2\sigma^2}\right), \quad -\infty < x < \infty, \quad \sigma^2 > 0
+\]
+  \begin{enumerate}
+  \item Apply the Factorization Theorem to show that $T(\vec{X}) = \sum_{i=1}^n X_i^2$ is a sufficient statistic for the parameter $\sigma^2$.
+
+  \textbf{Solution.}
+  \[\begin{aligned}
+  f_{\vec{X}}(\vec{x}|\sigma^2) &= \prod_{i=1}^n \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{x_i^2}{2\sigma^2}\right) \\
+  &= \left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)^n \exp\left(\sum_{i=1}^n -\frac{x_i^2}{2\sigma^2}\right) \\
+  &= \left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)^n \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^n x_i^2\right) \cdot 1
+  \end{aligned}\]
+  So if $g(\sum x_i^2, \sigma) = f_\vec{X}(x | \sigma^2)$ and $h(\vec{x}) = 1$, then we have factored $f_\vec{X}(x | \sigma^2) = g(\sum x_i^2, \sigma)h(\vec{x})$ and by the Factorization Theorem $\sum_{i=1}^n X_i^2$ is sufficient for $\sigma^2$.
+
+  \item Is $\sum_{i=1}^n X_i^2$ also a minimal sufficient statistic for $\sigma^2$? Justify your answer.
+
+  \textbf{Solution.} The ratio
+  \[
+  \begin{aligned}
+  \frac{f_\vec{X}(\vec{x} | \sigma^2) }{f_\vec{Y}(\vec{y} | \sigma^2)} &= \frac{\left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)^n \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^n x_i^2\right)}{\left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)^n \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^n y_i^2\right)} \\
+  &= \frac{\exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^n x_i^2\right)}{ \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^n y_i^2\right)} \\
+  &= \exp\frac{1}{2\sigma^2}\left(\sum_{i=1}^n y_i^2 - \sum_{i=1}^n x_i^2\right)
+  \end{aligned}
+  \]
+  is constant with respect to $\sigma^2$ if and only if $T(\vec{x}) = T(\vec{y})$, so yes, $T$ is a minimal sufficient statistic for $\sigma^2$.
+  \end{enumerate}
+
+\item Let $X_1, \ldots, X_n$ be \emph{i.i.d.} random variables from a Poisson distribution whose probability mass function is given by
+\[f_X(x|\lambda)=\frac{e^{-\lambda}\lambda^x}{x!}, \quad x=0,1,2,\ldots, \quad \lambda > 0. \]
+  \begin{enumerate}
+  \item Find a one-dimensional sufficient statistic for the parameter $\lambda$.
+
+  \textbf{Solution.} We begin by finding the joint probability mass function of $\vec{X} = \{X_1, X_2, \ldots, X_n\}$.
+  \[\begin{aligned}
+  f_\vec{X}(\vec{x} | \lambda) &= \prod_{i=1}^n \frac{e^{-\lambda}\lambda^{x_i}}{x_i!} \\
+  &= \left(\prod_{i=1}^n\frac{1}{x_i !}\right)\left(e^{-n\lambda}\lambda^{\sum_{i=1}^n x_i}\right)
+  \end{aligned}\]
+  So $T(\vec{X}) = \sum_{i=1}^n X_i$ is sufficient for $\lambda$.
+
+  \item Show that your answer in (a) is also a minimal sufficient statistic.
+
+  \textbf{Solution.} For two sample points $\vec{X} = \{X_1, \ldots, X_m\}$ and $\vec{Y} = \{Y_1, \ldots, Y_n\}$, the ratio
+  \[\begin{aligned}
+  \frac{f_\vec{X}(\vec{x} | \lambda) }{f_\vec{Y}(\vec{y} | \lambda)} &= \left( \prod_i \frac{1}{x_i} \right) \left(\prod_j \frac{1}{y_j}\right)\left( \frac{e^{-n\lambda}}{e^{-n\lambda}} \right) \left(\frac{\lambda^{\sum_i x_i}}{\lambda^{\sum_j y_j}}\right) \\
+  &= \left( \prod_i \frac{1}{x_i} \right) \left(\prod_j \frac{1}{y_j}\right)\lambda^{\sum_i x_i - \sum_j y_j}
+  \end{aligned}\]
+  is constant as a function of $\lambda$ if and only if $\sum_i x_i = \sum_j y_j$, so $T$ is a minimal sufficient statistic.
+  \end{enumerate}
+
+\item Let $X_1, \ldots, X_n$ be a random sample from $\text{Beta}(\alpha, \beta)$. Find a joint sufficient statistic for $(\alpha, \beta)$.
+
+\textbf{Solution.} The probability distribution function for $\beta{\alpha, \beta}$ is
+\[f(x | \alpha, \beta)=\frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha - 1}(1-x)^{\beta-1},\]
+so the joint pdf of $\vec{X}$ is
+\[f_\vec{X}(\vec{x} | \alpha, \beta) = \prod_{i=1}^n\left(\frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)}x_i^{\alpha - 1}(1-x_i)^{\beta-1}\right)\]
+So the ratio
+\[\begin{aligned}
+\frac{f_\vec{X}(\vec{x} | \alpha, \beta)}{f_\vec{Y}(\vec{y} | \alpha, \beta)} &= \frac{\prod_{i=1}^n\left(\frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)}x_i^{\alpha - 1}(1-x_i)^{\beta-1}\right)}{\prod_{i=1}^n\left(\frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)}y_i^{\alpha - 1}(1-y_i)^{\beta-1}\right)} \\
+&= \frac{\prod_{i=1}^n\left(x_i^{\alpha - 1}\right) \prod_{i=1}^n\left((1-x_i)^{\beta-1}\right)}{\prod_{i=1}^n\left(y_i^{\alpha - 1}\right)\prod_{i=1}^n\left((1-y_i)^{\beta-1}\right)}
+\end{aligned}\]
+is constant with respect to $(\alpha, \beta)$ if and only if
+\[\left(\prod_{i=1}^n x_i^{\alpha - 1},\prod_{i=1}^n(1 - x_i)^{\beta - 1}\right) = \left(\prod_{i=1}^n y_i^{\alpha - 1},\prod_{i=1}^n(1 - y_i)^{\beta - 1}\right) \]
+so
+\[T(\vec{X}) = \left(\prod_{i=1}^n X_i^{\alpha - 1},\prod_{i=1}^n(1 - X_i)^{\beta - 1}\right)\]
+is minimally sufficient (and therefore sufficient) for $(\alpha, \beta)$.
+\item Let $X_1, \ldots, X_n$ be a random sample from $\text{Cauchy}(\theta, 1)$. Find a minimal sufficient statistic for $\theta$.
+
+\textbf{Solution.} The pdf of $\text{Cauchy}(\theta, 1)$ is
+\[f(x | \theta) = \frac{1}{\pi(1 + (x - \theta)^2)}.\]
+So the ratio of the joint pdfs of $\vec{X}$ and $\vec{Y}$ is
+\[
+\frac{f_\vec{X}(\vec{x} | \theta)}{f_\vec{Y}(\vec{y}|\theta)} = \prod_{i=1}^n \frac{(1 + (y_i - \theta)^2)}{(1 + (x_i - \theta)^2)}
+\]
+which is clearly constant in $\theta$ if $(x_{(1)}, x_{(2)}, \ldots, x_{(n)}) = (y_{(1)}, y_{(2)}, \ldots, y_{(n)})$, which is to say if $\vec{x}$ and $\vec{y}$ are the same values, up to a permutation. And if $T(\vec{x}) \neq T(\vec{y})$, then the ratio forms a quotient of two polynomials whose roots are a function of $\theta$. So the statistic $T(X) = (X_{(1)}, X_{(2)}, \ldots, X_{(n)})$ is minimally sufficient for $\theta$.
+
+\item Let $X_1, \ldots, X_n$ be a random sample from $\U(-\theta, \theta)$. Find a minimal sufficient statistic for $\theta$.
+
+\textbf{Solution.} The probability density function of $\U{-\theta, \theta}$ is
+\[\begin{aligned}
+f(x | \theta) &=
+\begin{cases}
+(2\theta)^{-1} & \qquad x \in (-\theta, \theta) \\
+0 & \qquad \text{else},
+\end{cases} \\
+&= (2\theta)^{-1}1_{\{x \in (-\theta, \theta)\}}
+\end{aligned}\]
+so the joint pdf of $\vec{X}$ is
+\[\begin{aligned}
+f_\vec{X}(\vec{x}|\theta) &= \prod_{i=1}^n (2\theta)^{-1}1_{\{x_i \in (-\theta, \theta)\}}\\
+&= (2\theta)^{-n}1_{\{\min(x_i) \in (-\theta, \theta)\}}1_{\{\max(x_i) \in (-\theta, \theta)\}}
+\end{aligned}\]
+Consider the two-dimensional statistic $T(\vec{X}) = (\min(\vec{X}), \max(\vec{X}))$. The ratio
+\[
+\frac{f_\vec{X}(\vec{x} | \theta)}{f_{\vec{Y}}(\vec{y} | \theta)} = \frac{1_{\{\min(x_i) \in (-\theta, \theta)\}}1_{\{\max(x_i) \in (-\theta, \theta)\}}}{1_{\{\min(y_i) \in (-\theta, \theta)\}}1_{\{\max(y_i) \in (-\theta, \theta)\}}}
+\]
+is clearly constant (equal to 1, where it is defined) in $\theta$ when $T(\vec{x}) = T(\vec{y})$. When $T(\vec{x}) \neq T(\vec{y})$, the function will achieve values of 0 and 1. So $T$ is sufficient for $\theta$.
+\end{enumerate}
+
+\end{document}
