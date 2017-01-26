@@ -18,7 +18,7 @@
 \textbf{Solution.} This implies that $\P{Heads} = 1/3$ and $\P{Tails} = 2/3$. The probability of 2 heads occuring in the first 4 trials is described by a binomial distribution:
 \[\binom{4}{2}(1/3)^2(2/3)^2 = 8/27\]
 Then, the probability of heads occuring on the 5th trial is $1/3$, so the probability is
-\[(8/27)(1/3) = 8/81 \approx 0.0988\]
+\[(8/27)(1/3) = 8/81\]
 
 \item Suppose $X$ and $Y$ are two independent variables with unit variance. Let $Z = aX + Y$, where $a > 0$. If $\cor{X, Z} = 1/3$, then obtain the value of $a$.
 
@@ -39,7 +39,15 @@ Because $X$ and $Y$ have unit variance,
          &= \sqrt{a^2 \var{X} + \var{Y} + 2a\cov{X, Y}} \\
          &= \sqrt{a^2 + 1}
 \end{aligned}\]
-and $\sigma_X = 1$. So $a = \sqrt{a^2 + 1} / 3$.
+and $\sigma_X = 1$. So
+\[\begin{aligned}
+\frac{\cov{X, Z}}{\sigma_X \sigma_Z} &= 1/3 \\
+\frac{a}{\sqrt{a^2 + 1}} &= 1/3 \\
+a &= \sqrt{a^2 + 1} / 3 \\
+9a^2 &= a^2 + 1 \\
+a^2 &= 1/8 \\
+a &= \sqrt{1/8}
+\end{aligned}\]
 
 \item Let $g(x)$, $x \geq 0$ be a valid pdf for a nonnegative random variable and define
 \[ f(x, y) = \frac{ g(\sqrt{x^2 + y^2}) }{ 2\pi \sqrt{x^2 + y^2} }\]
@@ -58,7 +66,7 @@ for $x, y \in \R$
 
   \item Suppose that the pair $(X, Y)$ has the pdf $f(x, y)$. What is $P(XY > 0)$?
 
-  \textbf{Solution.} Due to the radial symmetry of $f$, $P(XY > 0) = 1/2$.
+  \textbf{Solution.} The region where $XY > 0$ is the union of quadrant 1 and quadrant 3. Due to the radial symmetry of $f$, $P(XY > 0) = 1/2$.
   \end{enumerate}
 
 \item Given independent and identically distributed random samples $X_1, X_2, \ldots, X_n$, each with finite mean $\mu$ and finite variance $\sigma^2$, define
@@ -69,8 +77,35 @@ W^2 &= \frac{1}{n} \sum_{i = 1}^n \left(X_i - \Xbar\right)^2
 \end{aligned}\]
   \begin{enumerate}
   \item Show that $S^2 \xrightarrow{P} \sigma^2$
+
+  \textbf{Solution.} Note that
+  \[\begin{aligned}
+  \frac{n - 1}{n}S^2 &= \frac{1}{n}\sum_{i=1}^n(X_i - \Xbar)^2 \\
+                     &= \frac{1}{n}\sum_{i=1}^n\left[(X_i - \mu) + (\mu - \Xbar)\right]^2 \\
+                     &= \frac{1}{n}\left[\sum_{i=1}^n(X_i - \mu)^2 + 2(\mu - \Xbar)\sum_{i=1}^n(X_i - \mu) + \sum_{i=1}^n(\Xbar - \mu)^2 \right] \\
+                     &= \frac{1}{n}\left[\sum_{i=1}^n(X_i - \mu)^2 + 2n(\mu - \Xbar)(\Xbar - \mu) + n(\Xbar - \mu)^2 \right] \\
+                     &= \frac{1}{n}\sum_{i=1}^n(X_i - \mu)^2 - 2(\mu - \Xbar)^2 + (\Xbar - \mu)^2.
+  \end{aligned}\]
+  Note that $\ev{(X_i - \mu)^2} = \sigma^2$, and $\ev{\Xbar - \mu} = 0$, so by the Weak Law of Large Numbers, $\frac{1}{n}\sum_{i=1}^n(X_i - \mu)^2 \convprob \sigma^2$ and $(X_i - \mu)^2 \convprob 0$. Therefore $(n - 1)/n S^2 \convprob \sigma^2$. However, $(n - 1)/n \rightarrow 1$, so $S^2 \convprob \sigma^2$.
+
   \item Derive the asymptotic distribution of $\frac{\sqrt{n}\left(\Xbar - \mu\right)}{\sqrt{S^2}}$
+
+  \textbf{Solution.} Let
+    \[\begin{aligned}
+    A_n &= \frac{\Xbar_n - \mu}{\sqrt{\sigma^2/n}}\\
+    B_n &= \frac{\sigma^2}{S^2}
+    \end{aligned}\]
+    By the Central Limit Theorem, $A_n \convdist \N{0, 1}$. We have proved that $S^2 \convdist \sigma^2$, and since $B_n$ applies a continuous transformation to $S^2$, we have $B_n \convdist 1$. Then, by Slutsky's theorem,
+    \[\frac{\sqrt{n}\left(\Xbar - \mu\right)}{\sqrt{S^2}} = A_n B_n \convdist \N{0, 1}\]
+
   \item Use the Delta method to derive the asymptotic distribution of $\Xbar^2$ after you normalize it appropriately.
+
+  \textbf{Solution.} By the Central Limit Theorem, $\sqrt{n}(\Xbar -
+\mu) \convdist \N{0, \sigma^2}$. Then, define $g(x) = x^2$, so that $g^{(1)}(x) = 2x$ is continuous. If $\mu \neq 0$, then we can apply the Delta Method to obtain
+\[\begin{aligned}
+\sqrt{n}\left[g(\Xbar) - g(\mu) \right] &\convdist \N{0, \sigma^2 \left[g^{(1)}(\mu) \right]^2} \\
+\sqrt{n}\left[\Xbar^2 - \mu^2 \right] &\convdist \N{0, 4\sigma^2\mu^2}
+\end{aligned}\]
   \end{enumerate}
 
 \item For two sets of random varibales $\{X_i\}$, $i = 1, \ldots, n$, and $\{Y_i\}$, $j = 1, \ldots, m$, show that
@@ -98,8 +133,8 @@ where $a_i$ and $b_j$ are arbitrary constants.
   \textbf{Solution.} In this case, we need to sum over all the possible values that $N$ could take, weighted by the probability of observing each particular value $n$. So
   \[\begin{aligned}
   \P{X_1, \ldots, X_N < t} &= \sum_{n = 0}^\infty \P{N = n} \P{X_1, \ldots, X_n < t} \\
-  &= \sum_{n = 0}^\infty \frac{\lambda^n e^{-n}}{n!}t^n\\
-  &= e^{t\lambda/e}
+  &= \sum_{n = 0}^\infty \frac{\lambda^n e^{-\lambda}}{n!}t^n\\
+  &= e^{-\lambda(1 - t)}
   \end{aligned}\]
 
   \item Let $S_N = X_0 + X_1 + \cdots + X_N$. Compute $\ev{S_N}$.
@@ -107,23 +142,12 @@ where $a_i$ and $b_j$ are arbitrary constants.
   \textbf{Solution.}
   \[\begin{aligned}
   \ev{S_N} &= \sum_{n = 0}^{\infty} \P{N = n} \ev{X_1 + \cdots + X_n} \\
-  &= \sum_{n=0}^\infty \left(\frac{\lambda^n e^{-n}}{n!} \right) \left(\frac{n}{2}\right)\\
-  &= \frac{\lambda}{2}e^{\lambda/e - 1}
+  &= \sum_{n=0}^\infty \left(\frac{\lambda^n e^{-
+  \lambda}}{n!} \right) \left(\frac{n}{2}\right)\\
+  &= \frac{\lambda}{2}
   \end{aligned}\]
   \end{enumerate}
 
-\item Let $X_1, X_2, X_3$ be a random sample of size 3 from a $N(0, 1)$ population. In each of the following cases, $Z$ denotes a specific function derived from this random sample. In each case identify the distribution of the resulting random variable $Z$ along with the associated parameters.
-  \begin{enumerate}
-  \item $X_1 + X_2 + 2X_3$.
-
-  \item $X_1^2 + X_2^2 + X_3^3$.
-
-  \item $(X_1 - X_2)^2 / 2$.
-
-  \item $Z = \frac{2X_1^2}{X_2^2 + X_3^2}$
-
-  \item $Z = \frac{(X_1 - X_2)^2}{(X_1 + X_2)^2}$
-  \end{enumerate}
 \end{enumerate}
 
 \end{document}
