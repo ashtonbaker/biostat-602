@@ -1,0 +1,146 @@
+\documentclass[titlepage]{article}
+
+%\linespread{1.25}
+
+\usepackage{../stats-homework}
+%\usepackage{baskervald}
+%\usepackage[T1]{fontenc}
+
+
+\begin{document}
+\title{BIOSTAT 602 Biostatistical Inference\\Homework 05}
+\author{Ashton Baker}
+\date{Thursday February 16, 2017}
+\maketitle
+\begin{enumerate}
+\item Let $X$ be a discrete random variable with pmf $f_X(x|\theta)$ where $\theta \in \{1, 2, 3\}$ and $x \in \{1, 2, 3, 4, 5, 6\}$.
+  \[f_X(x|\theta) =
+  \begin{cases}
+  x/21, & \theta = 1 \\
+  1/6, & \theta = 2 \\
+  I(x = 3), & \theta = 3
+  \end{cases}\]
+Find a maximum-likelihood estimator of $\theta$.
+
+\textbf{Solution.} Given an i.i.d. sample $X_1, \ldots, X_n$ from this distribution, the likelihood $\Ell$ of the sample is
+  \[\begin{aligned}
+  \Ell(\theta | \vec{x}) &= \prod_{i=1}^n f_X(x_i|\theta) \\
+  &= \begin{cases}
+     \left(\frac{1}{21}\right)^n \prod_{i=1}^n x_i, & \theta = 1 \\
+     (1/6)^n, & \theta = 2 \\
+     I(x_1, \ldots, x_n = 3), & \theta = 3
+     \end{cases}
+  \end{aligned}\]
+  So, the MLE is more of a prodedure or algorithm: Determine
+  \[\max\left\{21^{-n}\prod_{i=1}^n x_i, (1/6)^n, I(x_1, \ldots, x_n = 3)\right\}\]
+  and choose $\hat{\theta}$ to be 1, 2, or 3, correspondingly.
+
+\item Let $X_1, \ldots, X_n$ be i.i.d. random variables from $\U(0, \theta)$ with pdf
+  \[f_X(x|\theta) = \frac{1}{\theta}, \quad 0 \leq x \leq \theta\]
+
+  \begin{enumerate}
+  \item Find a method of moments estimator of $\theta$ using the lowest-order moments as possible.
+
+  \textbf{Solution.} The first moment $\mu_1$ can be calculated
+    \[\mu_1 = \ev{X} = \int_0^\theta x \frac{1}{\theta} \; dx = \frac{\theta}{2}\]
+  So a method of moments estimator of $\theta$ can be determined as the solution to $\hat{\mu}_1 = \frac{\hat{\theta}}{2}$, which is of course
+  \[\hat{\theta} = 2\hat{\mu}_1 = \frac{2}{n}\sum_{i=1}^n X_i\]
+
+  \item Calculate the mean and variance of the method of moments estimator.
+
+  \textbf{Solution.} The mean of $\hat{\theta}$ is
+  \[\begin{aligned}
+  \ev{\hat{\theta}} &= \ev{2\hat{\mu}_1} \\
+                    &= \frac{2}{n} \ev{\sum_{i=1}^n X_i} \\
+                    &= \frac{2}{n} \sum_{i=1}^n \ev{X_i} \\
+                    &= \frac{2}{n}\left(n\frac{\theta}{2}\right)\\
+                    &= \theta
+  \end{aligned}\]
+
+  The variance of the given uniform distribution is $\sigma = \frac{1}{12}\theta^2$, and the variance of the sample mean is given by $\var{\Xbar} = \sigma^2 / n$, so
+  \[\var{\hat{\theta}} = \var{2\hat{\mu}_1} = 4 \var{\hat{\mu}_1} = \frac{4\sigma^2}{12n}\]
+
+  \item Compare the MLE $\hat{\theta}_{MLE} = X_{(n)}$ with the estimator from (a) in terms of bias and variance. Which estimator is better? Justify your answer.
+  \end{enumerate}
+
+\item Let $X_1, \ldots, X_n$ be a random sample from a double exponential distribution with pdf
+  \[f_X(x | \mu, \sigma^2) = \frac{1}{2\sigma}\exp[-|x-\mu|/\sigma], \qquad x \in \R, \quad \mu \in \R, \quad \sigma > 0\]
+Find MLEs of $\mu$ and $\sigma$. Show all steps. You may use the fact that for a set of real numbers $x_1, x_2, \ldots, x_n$ the quantity $\frac{1}{n}\sum_{i=1}^n |x_i - a|$ is minimized when $a = \text{median}(x_1, x_2, \ldots, x_n)$
+
+\textbf{Solution.} For the random sample $X_1, \ldots, X_n$, the likelihood $\Ell$ of the sample is
+  \[ \begin{aligned}
+  \Ell(\mu, \sigma^2 | \vec{x}) &= \prod_{i=1}^n f(x_i|\mu, \sigma^2) \\
+  &= \prod_{i=1}^n\frac{1}{2\sigma} \exp[-|x_i - \mu|/\sigma] \\
+  &= (2\sigma)^{-n} \exp\left[-\frac{1}{\sigma}\sum_{i=1}^n|x_i - \mu|\right]
+  \end{aligned} \]
+and the log-likelihood $\ell$ is
+  \[ \begin{aligned}
+  \ell(\mu, \sigma^2 | \vec{x}) &= \log \Ell(\mu, \sigma^2 | \vec{x}) \\
+                                &= -n \log\left(2\sigma\right) - \frac{1}{\sigma}\sum_{i=1}^n |x_i - \mu|
+  \end{aligned} \]
+If $\sigma$ is constant, then it's pretty clear, given the hint, that $\ell$ is maximized when $\mu = \text{median}(x_1, x_2, \ldots, x_n)$. So that's the MLE for $\mu$. For $\sigma$, we need to take the derivative:
+  \[\begin{aligned}
+  \frac{\partial \ell}{\partial \sigma} &= -n(2\sigma)^{-n} + \sigma^{-2} \sum_{i=1}^n |x_i - \mu|
+  \end{aligned}\]
+and set it equal to zero:
+  \[\begin{aligned}
+  0 &= -n(2\sigma)^{-n} + \sigma^{-2} \sum_{i=1}^n |x_i - \mu| \\
+  n(2\sigma)^{-n} &= \sigma^{-2} \sum_{i=1}^n |x_i - \mu| \\
+  \sigma &= \frac{1}{2}\left(\frac{1}{n}\sum_{i=1}^n|x_i - \mu|\right)^{1/(2-n)}
+  \end{aligned}\]
+
+\item Let $X_1, \ldots, X_n$ be an i.i.d. random sample from a distribution with the pdf
+  \[f_X(x|\theta) = \frac{x}{\theta}\exp\left(-\frac{x^2}{2\theta}\right),\qquad x > 0 \quad \theta > 0\]
+
+  \begin{enumerate}
+  \item Find a complete sufficient statistic for $\theta$.
+
+  \item Find the Cramer-Rao lower bound for the variance of any ubiased estimator of $\theta$.
+
+  \item Can you find a simple function (constand multiple) of the complete sufficient statistic in part (a) which is unbiased?
+
+  \item Does the estimator in part (c) attain the Cramer-Rao lower bound obtained in part (b)?
+  \end{enumerate}
+
+\item Let $X_1, \ldots, X_n$ be an i.i.d. random sample from pdf
+  \[f_X(x | \theta) = \theta x^{\theta - 1} I(0 < x < 1)\]
+  \begin{enumerate}
+  \item When $\theta \geq 1$, find the maximum likelihood estimator for $\theta$.
+
+  \textbf{Solution.} The likelihood is
+    \[\begin{aligned}
+    \Ell(\theta | \vec{x}) &= \prod_{i=1}^n \theta x_i^{\theta - 1} I(0<x<1) \\
+    &= \theta^n \left( \prod_{i=1}^n x_i \right)^{\theta - 1} I(0 < x_1, \ldots, x_n < 1)
+    \end{aligned}\]
+  and the log likelihood is
+    \[\begin{aligned}
+    \ell(\theta | \vec{x}) &= n\log(\theta) + (\theta - 1) \sum_{i=1}^n \log(x_i) + \log(I(0<x_1, \ldots, x_n < 1))
+    \end{aligned}\]
+  The whole expression is meaningless if $x_1, \ldots, x_n$ are not between 0 and 1, so we will assume this is the case, and simply consider the final term to be zero. Then the MLE for $\theta$ can be found by solving $\partial \ell/\partial \theta = 0$. Note that
+  \[\frac{\partial \ell}{\partial \theta} = \frac{n}{\theta} + \sum_{i=1}^n \log(x_i)\]
+  Solving for zero gives
+  \[\begin{aligned}
+  0 &= \frac{n}{\theta} + \sum\log(x_i) \\
+  -\frac{n}{\theta} &= \sum_{i=1}^n \log(x_i) \\
+  \theta &= \frac{-n}{\sum_{i=1}^n \log(x_i)},
+  \end{aligned}\]
+  so $\hat{\theta} = -n/\sum_{i=1}^n \log(x_i)$ is the MLE for $\theta$.
+  \item When $\theta > 1$, find the maximum likelihood estimator for $\tau(\theta) = 1/\theta$.
+
+  \textbf{Solution.} First, we reformulate $\ell(\theta | \vec{x})$ in terms of $\tau$. This gives
+    \[\ell(\tau|\vec{x}) = -n \log(\tau) + (\tau^{-1} - 1)\sum_{i=1}^n \log(x_i)\]
+  So the derivative is
+    \[\frac{\partial \ell}{\partial \tau} = \frac{-n}{\tau} - \frac{1}{\tau^2} \sum_{i=1}^n \log(x_i)\]
+  and solving for $\partial \ell / \partial \tau$ gives
+    \[\begin{aligned}
+    0 &= -\frac{n}{\tau} - \frac{1}{\tau^2} \sum_{i=1}^n \log(x_i) \\
+    0 &= -n\tau - \sum_{i=1}^n \log(x_i) \\
+    \tau &= -\frac{1}{n}\sum_{i=1}^n \log(x_i)
+    \end{aligned}\]
+  So $\hat{\tau} = -\frac{1}{n}\sum_{i=1}^n \log(x_i)$ is the MLE for $\tau$.
+
+  \item When $\theta > 0$, find the Cramer-Rao lower bound of the variance of unbiased estimators for $\tau(\theta) = 1/\theta$. Does the MLE in (b) attain the bound?
+  \end{enumerate}
+\end{enumerate}
+
+\end{document}
