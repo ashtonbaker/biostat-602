@@ -61,6 +61,32 @@ Find a maximum-likelihood estimator of $\theta$.
   \[\var{\hat{\theta}} = \var{2\hat{\mu}_1} = 4 \var{\hat{\mu}_1} = \frac{4\theta^2}{12n}\]
 
   \item Compare the MLE $\hat{\theta}_{MLE} = X_{(n)}$ with the estimator from (a) in terms of bias and variance. Which estimator is better? Justify your answer.
+
+  \textbf{Solution.} The CDF of the sample maximum can be computed as
+    \[F_{X_{(n)}}(x) = \P{X_{(n)} \leq x} = \left(\frac{x}{\theta}\right)^n\]
+  so
+    \[\begin{aligned}
+    f_{X_{(n)}}(x) &= \frac{n}{\theta}\left(\frac{x}{\theta}\right)^{n-1}\\
+    &= \frac{n}{\theta^n}x^{n-1}
+    \end{aligned}\]
+  The mean of $X_{(n)}$ is then
+    \[\begin{aligned}
+    \int_0^\theta x \frac{n}{\theta^n}x^{n-1} \; dx
+    &= \frac{n}{\theta^n} \int_0^\theta x^n \; dx \\
+    &= \frac{n}{\theta^n(n + 1)} \left.\left[x^{n+1}\right]\right|_0^\theta \\
+    &= \frac{n\theta^{n+1}}{\theta^n(n + 1)} \\
+    &= \frac{n\theta}{n+1}
+    \end{aligned}\]
+  The variance of $X_{(n)}$ is $\var{X_{(n)}} = \ev{X_{(n)}^2} - \ev{X_{(n)}}^2$, so we calculate
+  \[\begin{aligned}
+  \ev{X_{(n)}^2} &= \int_0^\theta x^2 \frac{n}{\theta^n}x^{n-1}\;dx\\
+   &= \frac{n}{\theta^n} \int_0^\theta x^{n+1} \; dx \\
+   &= \frac{n\theta^2}{n+2}
+  \end{aligned}\]
+  So
+  \[\var{X_{(n)}} = \ev{X_{(n)}^2} - \ev{X_{(n)}}^2 = \frac{n\theta^2}{n+2} - \left(\frac{n\theta}{n+1}\right)^2\]
+
+  The variance of both statistics approaches zero as the sample size increases, but $\hat{\theta}_{MLE} = X_{(n)}$ is biased, so I suppose the method of moments estimator is better.
   \end{enumerate}
 
 \item Let $X_1, \ldots, X_n$ be a random sample from a double exponential distribution with pdf
