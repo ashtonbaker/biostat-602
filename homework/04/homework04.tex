@@ -1,0 +1,68 @@
+\documentclass[titlepage]{article}
+
+%\linespread{1.25}
+
+\usepackage{../stats-homework}
+%\usepackage{baskervald}
+%\usepackage[T1]{fontenc}
+
+
+\begin{document}
+\title{BIOSTAT 602 Biostatistical Inference\\Homework 04}
+\author{Ashton Baker}
+\date{Tuesday February 6, 2017}
+\maketitle
+\begin{enumerate}
+\item For each of the following statements, state whether it is true or false.
+  If it is true, provide brief justification. If it is false, provide a counterexample.
+
+  \begin{enumerate}
+    \item Minimal sufficient statistics are always a function of the order statistics.
+
+    \item Any function of a minimal sufficient statistic is sufficient.
+
+    \item A complete statistic is always a one-to-one function of a minimal sufficient statistic.
+
+    \item A one-to-one function of an ancillary statistic is also ancillary
+
+    \item If $X_1, \ldots, X_n$ is a random sample from a pdf conforming to a location family, then $\Xbar$ also has a pdf that belongs to a location family.
+  \end{enumerate}
+
+\item Let $X_1, X_2$ be two i.i.d. random variables from the probability density
+  function of the following form:
+  \[f_X(x|\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{x^2}{2\sigma^2} \right), \quad x \in \R, \; \sigma^2 > 0\]
+
+  \begin{enumerate}
+    \item Find a complete sufficient statistic for $\sigma^2$. Justify your answer.
+
+    \item Show that $\frac{X_1}{\sqrt{X_1^2 + X_2^2}}$ is an ancillary statistic.
+
+    \item Show that
+    \[\ev{\frac{X_1}{\sqrt{X_1^2 + X_2^2}}} = 0\]
+  \end{enumerate}
+
+\item Let $X_1, \ldots, X_n$ be i.i.d. observations from a gamma distribution $\text{Gamma}(\alpha, \beta)$ with the pdf
+\[f_X(x|\alpha, \beta) = \frac{1}{\Gamma(\alpha)\beta^\alpha}x^{\alpha - 1}e^{-x/\beta}, \qquad 0 \leq x \leq \infty, \; \alpha > 0, \; \beta > 0\]
+  \begin{enumerate}
+    \item Show that the gamma distribution belongs to a full exponential family. Identify $h(\cdot)$, $c(\cdot)$, $w_j(\cdot)$, $t_j(\cdot)$ terms in your proof.
+
+    \item Find a complete sufficient statistic for $\vec{\theta} = (\alpha, \beta)$ and justify whether it is also a minimal sufficient statistic or not.
+  \end{enumerate}
+
+\item Let $X_1, \ldots, X_n$ be i.i.d. random variables from the two-parameter exponential distribution with probability density function of the following form:
+\[f_X(x|\mu, \sigma) = \frac{1}{\sigma}e^{-(x - \mu)/\sigma}, \quad \mu < x < \infty, \; 0 < \sigma < \infty.\]
+Consider the statistics $T_1 = X_{(1)}$ and $T_2 = X_{(1)} - \Xbar$. Show that $T_1$ and $T_2$ are independently distributed.
+
+\item Consider the previous problem again.
+\begin{enumerate}
+  \item Assuming $\sigma$ is known, find a method of moments estimator for $\mu$ by using the lowest-order moment of $X$ as possible.
+
+  \item Assuming $\mu$ is known, find a method of moments estimator for $\sigma$ by using the lowest-order moment of $X$ as possible.
+
+  \item Assuming both parameters are unknown, find a method of moments estimator of $\sigma$ by using the lowest-order moments of $X$ as possible.
+
+  \item Assuming both parameters are unknown, find a method of moments estimator of the survival function $S(t) = \P{X > t}$ for a given $t > \mu$, assuming that $X$ follows the pdf above. You may define a new random variable and use its moments.
+\end{enumerate}
+
+\end{enumerate}
+\end{document}

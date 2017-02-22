@@ -106,14 +106,16 @@ and the log-likelihood $\ell$ is
   \end{aligned} \]
 If $\sigma$ is constant, then it's pretty clear, given the hint, that $\ell$ is maximized when $\mu = \text{median}(x_1, x_2, \ldots, x_n)$. So that's the MLE for $\mu$. For $\sigma$, we need to take the derivative:
   \[\begin{aligned}
-  \frac{\partial \ell}{\partial \sigma} &= -n(2\sigma)^{-n} + \sigma^{-2} \sum_{i=1}^n |x_i - \mu|
+  \frac{\partial \ell}{\partial \sigma} &= -2n(2\sigma)^{-1} + \sigma^{-2} \sum_{i=1}^n |x_i - \mu| \\
+  &= -\frac{n}{\sigma} + \frac{1}{\sigma^2}\sum_{i=1}^n |x_i - \mu|
   \end{aligned}\]
 and set it equal to zero:
   \[\begin{aligned}
-  0 &= -n(2\sigma)^{-n} + \sigma^{-2} \sum_{i=1}^n |x_i - \mu| \\
-  n(2\sigma)^{-n} &= \sigma^{-2} \sum_{i=1}^n |x_i - \mu| \\
-  \sigma &= \frac{1}{2}\left(\frac{1}{n}\sum_{i=1}^n|x_i - \mu|\right)^{1/(2-n)}
+  0 &= -\frac{n}{\sigma} + \frac{1}{\sigma^2}\sum_{i=1}^n |x_i - \mu| \\
+  0 &= -n \sigma + \sum_{i=1}^n |x_i - \mu| \\
+  \sigma &= \frac{1}{n}\sum_{i=1}^n |x_i - \mu|
   \end{aligned}\]
+So the MLE for $\sigma$ is $\hat{\sigma} = -\frac{1}{n}\sum_{i=1}^n |x_i - \mu| $.
 
 \item Let $X_1, \ldots, X_n$ be an i.i.d. random sample from a distribution with the pdf
   \[f_X(x|\theta) = \frac{x}{\theta}\exp\left(-\frac{x^2}{2\theta}\right),\qquad x > 0 \quad \theta > 0\]

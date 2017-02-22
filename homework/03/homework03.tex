@@ -1,0 +1,82 @@
+\documentclass[titlepage]{article}
+
+%\linespread{1.25}
+
+\usepackage{../stats-homework}
+%\usepackage{baskervald}
+%\usepackage[T1]{fontenc}
+
+
+\begin{document}
+\title{BIOSTAT 602 Biostatistical Inference\\Homework 02}
+\author{Ashton Baker}
+\date{Thursday January 26, 2017}
+\maketitle
+\begin{enumerate}
+\item Let $X_1, \ldots, X_n$ be i.i.d random variables from the probability density function of the following form:
+  \[
+    f_X(x|\theta) =
+    \begin{cases}
+      \frac{2x}{\theta^2}, &\quad 0 < x < \theta\\
+      0 &\quad \text{otherwise}
+    \end{cases}
+  \]
+  where $\theta > 0$. Find a minimal sufficient statistic for $\theta$.
+
+  \textbf{Solution.} The joint pdf for $X_1, \ldots, X_n$ is
+  \[\begin{aligned}
+  f_\vec{X}(\vec{x}|\theta) &= \prod_{i=1}^n \frac{2x_i}{\theta^2} 1_{\{x_i \in (0, \theta)\}} \\
+  &= \left(\frac{2}{\theta^2}\right)^n 1_{\{x_{(1)} \in (0, \theta)\}} 1_{\{x_{(n)} \in (0, \theta)\}} \prod_{i=1}^n x_i.
+  \end{aligned}\]
+  So for a second sample $\vec{Y}$, we get
+  \[\frac{f_\vec{X}(\vec{x}|\theta)}{f_\vec{Y}(\vec{y}|\theta)} = \frac{1_{\{x_{(1)} \in (0, \theta)\}} 1_{\{x_{(n)} \in (0, \theta)\}} \prod_{i=1}^n x_i}{1_{\{y_{(1)} \in (0, \theta)\}} 1_{\{y_{(n)} \in (0, \theta)\}} \prod_{i=1}^n y_i}\]
+  which is constant in $\theta$ when $(\min(\vec{X}), \max(\vec{X})) = (\min(\vec{Y}), \max(\vec{Y}))$, so the statistic $T(\vec{X}) = (\min(\vec{X}), \max(\vec{X}))$ is minimally sufficient.
+
+\item Suppose that $X_1, \ldots, X_n$ are i.i.d random variables from pdf
+    \[f_X(x | \theta) = \theta x^{\theta - 1} \exp\left( -x^\theta \right)\]
+where $\theta > 0$, $x > 0$. Show that $(\log X_{(n)})/(\log X_{(1)})$ is an ancillary statistic.
+
+\item Let $X_1, \ldots, X_n$ be i.i.d. random variables from a uniform distribution $\U{-\theta, \theta}$ with the pdf given by
+\[f_X(x|\theta) = \frac{1}{2\theta}1_{\{x \in (-\theta, \theta)\}}, \quad \theta > 0\]
+\begin{enumerate}
+\item Is the two dimensional statistic $T_1(\vec{X}) = \left(X_{(1)}, X_{(n)} \right)$ a complete sufficient statistic? Justify your answer.
+
+\item Is the one-dimensional statistic $T_2(\vec{X}) = \max_i \left\{|X_i|\right\}$ a complete sufficient statistic? Justify your answer.
+\end{enumerate}
+
+\item Let $X_1, \ldots, X_n$ be i.i.d. random variables from $\N{\mu, \sigma^2}$ population with $\mu$ known. Find a one-dimensional minimal sufficient statistic for $\sigma^2$.
+
+\textbf{Solution.} The joint distribution for $X_1, \ldots, X_n$ is
+\[\begin{aligned}
+f_\vec{X}(\vec{x} | \sigma^2) &= \prod_{i=1}^n (2\sigma^2\pi)^{-1/2}\exp\left(-\frac{(x_i - \mu)^2}{2\sigma^2}\right) \\
+&= \left(2\sigma^2\pi\right)^{-n/2} \exp \left(\sum_{i=1}^n -\frac{(x_i - \mu)}{2\sigma^2}\right)
+\end{aligned}\]
+so if we have another sample $\vec{Y} = \{Y_1, Y_2, \ldots, Y_n\}$, then the ratio
+\[\begin{aligned}
+\frac{f_\vec{X}(\vec{x} | \sigma^2)}{f_\vec{Y}(\vec{y} | \sigma^2)} &= \frac{\exp\left(\sum_{i=1}^n-(x_i-\mu)^2/\sigma^2\right)}{\exp\left(\sum_{i=1}^n-(y_i-\mu)^2/\sigma^2\right)} \\
+&= \exp\left(\frac{1}{\sigma^2}\left[\sum_{i=1}^n(y_i - \mu)^2 - \sum_{i=1}^n (x_i - \mu)^2\right]\right)
+\end{aligned}\]
+is constant in $\sigma^2$ if and only if $\sum_{i=1}^n(y_i - \mu)^2 = \sum_{i=1}^n(x_i - \mu)^2$. So the statistic $T(\vec{X}) = \sum_{i=1}^n(x_i - \mu)^2$ is minimally sufficient for $\sigma^2$.
+
+\item Let $X_1, \ldots, X_n$ be i.i.d. observations uniformly drawn from $\{1, 2, \ldots, \theta\}$, where $\theta$ is a positive integer. This corresponds to a discrete uniform distribution with pmf
+\[f_X(x|\theta) = \begin{cases}
+1/\theta &\quad x = 1, 2, \ldots, \theta \\
+0 &\quad \text{otherwise}
+\end{cases}\]
+Show that $T(\vec{X}) = \max_i X_i$ is a complete, minimal, sufficient statistic.
+
+\textbf{Solution.} The pmf of $T(\vec{X})$ is
+\[\begin{aligned}
+\P{X_{(n)} = k} &= \binom{n}{1} \left(\frac{k}{\theta}\right)^{n-1}\left(\frac{1}{\theta}\right)
+\end{aligned}\]
+So if
+\[
+\begin{aligned}
+  \ev{g(T)} &= \sum_{k=1}^\theta g(k) \P{X_{(n)} = k} \\
+            &= \sum_{k=1}^\theta g(k) \binom{n}{1} \left(\frac{k}{\theta}\right)^{n-1}\left(\frac{1}{\theta}\right) \\
+            &= 0,
+\end{aligned}\]
+for $\theta = 1, 2, \ldots$, then clearly $g(k) = 0$ for all $k$.
+
+\end{enumerate}
+\end{document}

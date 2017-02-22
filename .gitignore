@@ -2,3 +2,4 @@
 !.gitignore
 *.synctex.gz
 *.log
+*auto/
